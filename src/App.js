@@ -2,17 +2,21 @@ import React, { Component } from "react";
 import { Header, Table, Input } from "semantic-ui-react";
 import axios from "axios";
 import { NONAME } from "dns";
+import { formatWithOptions } from "util";
+const API = "http://localhost:3000";
 
 class App extends Component {
   state = {
     data: [],
-    jobType: []
+    jobType: [],
+    value: ""
   };
 
   // load data from database
   componentDidMount() {
-    const API = "http://localhost:3000/employee";
-    axios.get(API).then(response => this.setState({ data: response.data }));
+    axios
+      .get(`${API}/employee`)
+      .then(response => this.setState({ data: response.data }));
   }
 
   displayName(val) {
@@ -24,14 +28,19 @@ class App extends Component {
     }
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log(`handleSubmit: ${e}`);
-  }
+  handleSubmit = e => {
+    axios
+      .post(`${API}/employee`, {
+        name: this.state.value
+      })
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
 
-  handleChange(e) {
+  handleChange = e => {
+    this.setState({ value: e.target.value });
     console.log(`add ${e.target.value} to employee data`);
-  }
+  };
 
   render() {
     let { data, jobType } = this.state;
