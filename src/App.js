@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Header, Table, Input } from "semantic-ui-react";
 import axios from "axios";
-import { NONAME } from "dns";
-import { formatWithOptions } from "util";
 const API = "http://localhost:3000";
 
 class App extends Component {
@@ -22,12 +20,14 @@ class App extends Component {
   displayName(val) {
     if (val === "undefined") {
     } else {
+      console.log(val);
       return val.map(person => (
-        <Table.HeaderCell key={person._id}>{person.name}</Table.HeaderCell>
+        <Table.Cell key={person._id}>{person.name}</Table.Cell>
       ));
     }
   }
 
+  // updates employee name on db on header form submit
   handleSubmit = e => {
     axios
       .post(`${API}/employee`, {
@@ -39,17 +39,25 @@ class App extends Component {
 
   handleChange = e => {
     this.setState({ value: e.target.value });
-    console.log(`add ${e.target.value} to employee data`);
   };
+
+  handleClick(e) {
+    console.log(`handle click ${e.target.value}`);
+
+    if (e.target.value === "delete") {
+      console.log(e.target.value);
+    }
+  }
 
   render() {
     let { data, jobType } = this.state;
     return (
       <Table celled collapsing>
-        <Table.Header>
+        <Table.Header />
+        <Table.Body>
           <Table.Row>
             {this.displayName(data)}
-            <Table.HeaderCell>
+            <Table.Cell>
               <form onClick={this.handleSubmit}>
                 <Input
                   onChange={this.handleChange}
@@ -60,20 +68,7 @@ class App extends Component {
                 />
                 <input type="submit" value="Add" />
               </form>
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>jobs</Table.Cell>
-            <Table.Cell>jobs</Table.Cell>
-            <Table.Cell>jobs</Table.Cell>
-            <Table.Cell>jobs</Table.Cell>
-            <Table.Cell>jobs</Table.Cell>
-            <Table.Cell>jobs</Table.Cell>
-            <Table.Cell>jobs</Table.Cell>
-            <Table.Cell>jobs</Table.Cell>
+            </Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>
