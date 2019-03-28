@@ -20,9 +20,16 @@ class App extends Component {
   displayName(val) {
     if (val === "undefined") {
     } else {
-      console.log(val);
+      console.log(
+        val.map(
+          person =>
+            `${person.name} has these jobs: ${person.jobList.map(list => list)}`
+        )
+      );
       return val.map(person => (
-        <Table.Cell key={person._id}>{person.name}</Table.Cell>
+        <td key={person._id}>
+          <tr>{person.name}</tr>
+        </td>
       ));
     }
   }
@@ -52,23 +59,27 @@ class App extends Component {
   render() {
     let { data, jobType } = this.state;
     return (
-      <Table celled collapsing>
-        <Table.Header />
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            {data.map(person => (
+              <Table.HeaderCell>{person.name}</Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
         <Table.Body>
           <Table.Row>
-            {this.displayName(data)}
-            <Table.Cell>
-              <form onClick={this.handleSubmit}>
-                <Input
-                  onChange={this.handleChange}
-                  placeholder="Name"
-                  type="text"
-                  name="employee-name"
-                  value={this.state.value}
-                />
-                <input type="submit" value="Add" />
-              </form>
-            </Table.Cell>
+            {data.map(person =>
+              person.jobList.length === 0 ? (
+                <Table.Cell>add job</Table.Cell>
+              ) : (
+                person.jobList.map(job => (
+                  <Table.Row>
+                    <Table.Cell>{job}</Table.Cell>
+                  </Table.Row>
+                ))
+              )
+            )}
           </Table.Row>
         </Table.Body>
       </Table>
@@ -77,3 +88,24 @@ class App extends Component {
 }
 
 export default App;
+// <tr>
+// {data.map(person => (
+//   <td key={person._id}>
+//     {person.name}
+//     <tr>
+//       {person.jobList.length === 0 ? (
+//         <td>Add Job</td>
+//       ) : (
+//         <tbody>
+//           <tr>
+//             <td>{person.jobList}</td>
+//           </tr>
+//           <tr>
+//             <td>Add Job</td>
+//           </tr>
+//         </tbody>
+//       )}
+//     </tr>
+//   </td>
+// ))}
+// </tr>
