@@ -7,14 +7,17 @@ class App extends Component {
   state = {
     data: [],
     jobType: [],
-    value: ""
+    value: "",
+    jobCounter: 0
   };
 
   // load data from database
   componentDidMount() {
-    axios
-      .get(`${API}/employee`)
-      .then(response => this.setState({ data: response.data }));
+    axios.get(`${API}/employee`).then(response =>
+      this.setState({
+        data: response.data
+      })
+    );
   }
 
   displayName(val) {
@@ -57,7 +60,14 @@ class App extends Component {
   }
 
   render() {
-    let { data, jobType } = this.state;
+    let { data } = this.state;
+    let counter = 0;
+    data.map(person => {
+      let list = person.jobList.length;
+      if (list > counter) {
+        counter = list;
+      }
+    });
     return (
       <Table celled>
         <Table.Header>
@@ -69,17 +79,19 @@ class App extends Component {
         </Table.Header>
         <Table.Body>
           <Table.Row>
-            {data.map(person =>
-              person.jobList.length === 0 ? (
-                <Table.Cell>add job</Table.Cell>
-              ) : (
-                person.jobList.map(job => (
-                  <Table.Row>
-                    <Table.Cell>{job}</Table.Cell>
-                  </Table.Row>
-                ))
-              )
-            )}
+            {data.map(person => {
+              let arr = [];
+              if (person.jobList.length === 0) {
+                for (let i = 0; i < counter; i++) {
+                  arr.push(
+                    <Table.Row>
+                      <Table.Cell>test</Table.Cell>
+                    </Table.Row>
+                  );
+                }
+                return <Table.Row>{arr}</Table.Row>;
+              }
+            })}
           </Table.Row>
         </Table.Body>
       </Table>
@@ -88,24 +100,3 @@ class App extends Component {
 }
 
 export default App;
-// <tr>
-// {data.map(person => (
-//   <td key={person._id}>
-//     {person.name}
-//     <tr>
-//       {person.jobList.length === 0 ? (
-//         <td>Add Job</td>
-//       ) : (
-//         <tbody>
-//           <tr>
-//             <td>{person.jobList}</td>
-//           </tr>
-//           <tr>
-//             <td>Add Job</td>
-//           </tr>
-//         </tbody>
-//       )}
-//     </tr>
-//   </td>
-// ))}
-// </tr>
