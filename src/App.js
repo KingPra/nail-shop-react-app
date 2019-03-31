@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Header, Table, Input } from "semantic-ui-react";
+import AddJob from "./components/AddJob";
+import AddPerson from "./components/AddPerson";
 import axios from "axios";
+import "./App.css";
 const API = "http://localhost:3000";
 
 class App extends Component {
@@ -15,16 +18,6 @@ class App extends Component {
     axios
       .get(`${API}/employee`)
       .then(response => this.setState({ data: response.data }));
-  }
-
-  displayName(val) {
-    if (val === "undefined") {
-    } else {
-      console.log(val);
-      return val.map(person => (
-        <Table.Cell key={person._id}>{person.name}</Table.Cell>
-      ));
-    }
   }
 
   // updates employee name on db on header form submit
@@ -50,28 +43,39 @@ class App extends Component {
   }
 
   render() {
+    let counter = 0;
+    let keyCounter = 0;
     let { data, jobType } = this.state;
     return (
-      <Table celled collapsing>
-        <Table.Header />
-        <Table.Body>
-          <Table.Row>
-            {this.displayName(data)}
-            <Table.Cell>
-              <form onClick={this.handleSubmit}>
-                <Input
-                  onChange={this.handleChange}
-                  placeholder="Name"
-                  type="text"
-                  name="employee-name"
-                  value={this.state.value}
-                />
-                <input type="submit" value="Add" />
-              </form>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <div>
+        <AddPerson />
+        <div className="container">
+          {data.map(person => {
+            counter++;
+            return (
+              <div
+                className="column"
+                style={{ gridColumnStart: counter }}
+                key={person._id}
+              >
+                <div>{person.name}</div>
+
+                {person.jobList.map(list => {
+                  keyCounter++;
+                  return (
+                    <div className="item" key={keyCounter + person._id}>
+                      {list}
+                    </div>
+                  );
+                })}
+                <div className="item">
+                  <AddJob />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     );
   }
 }
