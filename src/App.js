@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Header, Table, Input } from "semantic-ui-react";
 import AddJob from "./components/AddJob";
 import AddPerson from "./components/AddPerson";
+import Tip from "./components/Tip";
 import axios from "axios";
 import "./App.css";
 const API = "http://localhost:3000";
@@ -10,7 +11,7 @@ class App extends Component {
   state = {
     data: [],
     jobType: [],
-    value: ""
+    tip: []
   };
 
   // load data from database
@@ -48,7 +49,7 @@ class App extends Component {
     let { data, jobType } = this.state;
     return (
       <div>
-        <AddPerson />
+        <AddPerson api={API} />
         <div className="container">
           {data.map(person => {
             counter++;
@@ -65,6 +66,7 @@ class App extends Component {
                   return (
                     <div className="item" key={keyCounter + person._id}>
                       {list}
+                      <Tip />
                     </div>
                   );
                 })}

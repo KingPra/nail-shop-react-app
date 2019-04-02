@@ -3,6 +3,8 @@
   grid-auto-columns: auto;
   grid-auto-rows: auto;
   justify-items: center;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 .column {
@@ -16,4 +18,5 @@
   text-align: center;
   height: 100px;
   width: 100px;
+  overflow: hidden;
 }
