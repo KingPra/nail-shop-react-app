@@ -5,7 +5,6 @@ export default function AddPerson(props) {
   const hide = {
     display: "none"
   };
-  console.log(props.api);
 
   function handleOnClick(e) {
     const form = document.getElementById("form");
