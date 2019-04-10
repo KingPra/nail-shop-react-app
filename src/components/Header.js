@@ -1,15 +1,25 @@
-import React from "react";
+import React, { Component } from "react";
+import "../App.css";
 
-export default function Header(props) {
-  const styles = {
-    listStyle: "none",
-    background: "red",
-    color: "blue"
-  };
-
-  return (
-    <ul className={styles}>
-      This is a Header function {props.name} {props.list}
-    </ul>
-  );
+class Header extends Component {
+  render() {
+    return this.props.data.map(person => (
+      <div className="column">
+        <div className="item" key={person._id} style={headerStyle}>
+          {person.name}
+        </div>
+      </div>
+    ));
+  }
 }
+let counter = 0;
+const headerStyle = {
+  display: "inline-block",
+  width: "100px",
+  padding: "10px",
+  border: "dotted 1px #ccc",
+  overflow: "hidden",
+  gridColumnStart: `${counter++}`
+};
+
+export default Header;

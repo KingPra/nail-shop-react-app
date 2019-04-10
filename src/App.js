@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Header, Table, Input } from "semantic-ui-react";
+import Header from "./components/Header";
+import Cell from "./components/Cell";
 import AddJob from "./components/AddJob";
 import AddPerson from "./components/AddPerson";
 import axios from "axios";
@@ -30,51 +31,14 @@ class App extends Component {
       .catch(error => console.log(error));
   };
 
-  handleChange = e => {
-    this.setState({ value: e.target.value });
-  };
-
-  handleClick(e) {
-    console.log(`handle click ${e.target.value}`);
-
-    if (e.target.value === "delete") {
-      console.log(e.target.value);
-    }
-  }
-
   render() {
     let counter = 0;
     let keyCounter = 0;
-    let { data, jobType } = this.state;
+    let { data } = this.state;
     return (
-      <div>
-        <AddPerson />
-        <div className="container">
-          {data.map(person => {
-            counter++;
-            return (
-              <div
-                className="column"
-                style={{ gridColumnStart: counter }}
-                key={person._id}
-              >
-                <div>{person.name}</div>
-
-                {person.jobList.map(list => {
-                  keyCounter++;
-                  return (
-                    <div className="item" key={keyCounter + person._id}>
-                      {list}
-                    </div>
-                  );
-                })}
-                <div className="item">
-                  <AddJob />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      <div className="container">
+        <Header data={data} />
+        <Cell data={data} />
       </div>
     );
   }
