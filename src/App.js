@@ -39,6 +39,10 @@ class App extends Component {
     });
   };
 
+  addJob = () => {
+    console.log("add new job");
+  };
+
   render() {
     return (
       <div>
@@ -47,6 +51,7 @@ class App extends Component {
           data={this.state.data}
           api={API}
           handleDelete={this.handleDelete}
+          addJob={this.addJob}
         />
       </div>
     );

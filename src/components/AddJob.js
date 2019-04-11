@@ -1,5 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 
-export default function AddJob() {
-  return <button>add job</button>;
+class AddJob extends Component {
+  render() {
+    return <button onClick={this.props.addJob}>add job</button>;
+  }
 }
+
+export default AddJob;

@@ -7,7 +7,7 @@ class Cell extends Component {
   render() {
     let counter = 0;
     let keyCounter = 0;
-    let { data, api, handleDelete } = this.props;
+    let { data, api, handleDelete, addJob } = this.props;
     return (
       <div className="container">
         {data.map(person => {
@@ -35,7 +35,7 @@ class Cell extends Component {
                 );
               })}
               <div className="item">
-                <AddJob />
+                <AddJob addJob={addJob} />
               </div>
             </div>
           );
