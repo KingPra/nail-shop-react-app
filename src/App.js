@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import Header from "./components/Header";
 import Cell from "./components/Cell";
-import AddJob from "./components/AddJob";
 import AddPerson from "./components/AddPerson";
-import Tip from "./components/Tip";
-import DeletePerson from "./components/DeletePerson";
 import axios from "axios";
 import "./App.css";
 const API = "http://localhost:3000";
@@ -37,53 +33,21 @@ class App extends Component {
     this.setState({ value: e.target.value });
   };
 
-  // handleClick(e) {
-  //   console.log(`handle click ${e.target.value}`);
-
-  //   if (e.target.value === "delete") {
-  //     console.log(e.target.value);
-  //   }
-  // }
+  handleDelete = id => {
+    this.setState({
+      data: this.state.data.filter(person => person._id !== id)
+    });
+  };
 
   render() {
-    let counter = 0;
-    let keyCounter = 0;
-    let { data } = this.state;
     return (
       <div>
         <AddPerson api={API} />
-        <div className="container">
-          {data.map(person => {
-            counter++;
-            return (
-              <div
-                className="column"
-                style={{ gridColumnStart: counter }}
-                key={person._id}
-              >
-                <div>{person.name}</div>
-                <DeletePerson
-                  id={person._id}
-                  api={API}
-                  data={this.state.data}
-                />
-                {person.jobList.map(list => {
-                  keyCounter++;
-                  return (
-                    <div className="item" key={keyCounter + person._id}>
-                      {list}
-                      <Tip />
-                    </div>
-                  );
-                })}
-                <div className="item">
-                  <AddJob />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        >>>>>>> add-person-component
+        <Cell
+          data={this.state.data}
+          api={API}
+          handleDelete={this.handleDelete}
+        />
       </div>
     );
   }
