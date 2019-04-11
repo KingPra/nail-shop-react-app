@@ -8,7 +8,7 @@ const API = "http://localhost:3000";
 class App extends Component {
   state = {
     data: [],
-    jobType: [],
+    jobType: ["medi", "pedi", "massage"],
     tip: [],
     delete: false
   };
@@ -39,14 +39,20 @@ class App extends Component {
     });
   };
 
-  addJob = () => {
-    console.log("add new job");
+  addJob = id => {
+    this.setState({
+      data: this.state.data
+    });
+  };
+
+  handlePost = name => {
+    console.log("handle post for", name);
   };
 
   render() {
     return (
       <div>
-        <AddPerson api={API} />
+        <AddPerson api={API} addPerson={this.handlePost} />
         <Cell
           data={this.state.data}
           api={API}

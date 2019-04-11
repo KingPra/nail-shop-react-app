@@ -18,15 +18,20 @@ export default function AddPerson(props) {
     }
   }
 
-  function handleSubmit(e) {
-    const name = document.querySelector(".name").value;
-    axios
-      .post(`${props.api}/employee`, { name: name })
-      .catch(error => console.log(error));
-  }
+  // function handleSubmit(e) {
+  //   const name = document.querySelector(".name").value;
+  //   axios
+  //     .post(`${props.api}/employee`, { name: name })
+  //     .catch(error => console.log(error));
+  // }
   return (
     <div>
-      <form id="form" style={hide} onSubmit={handleSubmit}>
+      <form
+        id="form"
+        style={hide}
+        type="button"
+        onSubmit={props.addPerson.bind(this, "john")}
+      >
         <input className="name" type="text" placeholder="name" />
         <input type="submit" value="submit" />
       </form>
