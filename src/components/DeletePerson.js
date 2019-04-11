@@ -7,7 +7,6 @@ export default class DeletePerson extends Component {
     const id = this.props.id;
 
     const onClick = () => {
-      console.log(`onClick = ${api} ${id}`);
       axios
         .delete(`${api}/employee?id=${id}`)
         .then(this.props.handleDelete(id))
