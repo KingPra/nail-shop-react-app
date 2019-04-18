@@ -47,12 +47,17 @@ class App extends Component {
 
   handlePost = name => {
     console.log("handle post for", name);
+    axios
+      .post(`${API}/employee`, {
+        name
+      })
+      .catch(error => console.log(error));
   };
 
   render() {
     return (
       <div>
-        <AddPerson api={API} addPerson={this.handlePost} />
+        <AddPerson api={API} name={this.handlePost} />
         <Cell
           data={this.state.data}
           api={API}
